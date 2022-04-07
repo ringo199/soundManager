@@ -25,7 +25,7 @@ extern "C"
 
 #define MAX_AUDIO_FRAME_SIZE 192000 // 1 second of 48khz 32bit audio
  
-#define MAX_AUDIO_SIZE 0x10000000
+#define MAX_AUDIO_SIZE 0x10000000 // 16mb
 
 using namespace std;
 
@@ -169,7 +169,11 @@ void* create_init_th(void* args)
 		{
             for (;;)
             {
-                if (soundPlayingList.empty()) continue;
+                if (soundPlayingList.empty())
+                {
+                    status = AUDIO_STATUS_READ;
+                    continue;
+                }
 
                 node = soundPlayingList.head;
                 for(;;)
@@ -225,7 +229,7 @@ void* create_play_th(void* args)
 	{
 		if (status == AUDIO_STATUS_READ && !spo->isReadEnd)
 		{
-			if (sound -> pcm_buffer_size - data_count < frame_buffer_size)
+			if (sound -> pcm_buffer_size - data_count <= 0)
 			{
 				if (!po->isLoop)
 				{

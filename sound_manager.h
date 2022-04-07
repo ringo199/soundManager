@@ -7,7 +7,7 @@
 struct playObj
 {
 	std::string 	url;
-	bool 			isLoop;
+	bool 	        isLoop;
 	static playObj* builder(std::string url, bool isLoop)
 	{
 		playObj* po = new playObj;

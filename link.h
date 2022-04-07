@@ -79,7 +79,7 @@ public:
             this->head = nullptr;
             this->end = nullptr;
         }
-        if (node->prev == nullptr)
+        else if (node->prev == nullptr)
         {
             this->head = node->next;
             this->head->prev = nullptr;
